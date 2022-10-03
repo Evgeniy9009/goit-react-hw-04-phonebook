@@ -28,34 +28,11 @@ export default function Contacts() {
             localStorage.removeItem("contacts")
         }
     }, [])
-    // componentDidMount() {
-    //     console.log("componentDidMount")
-    //     const contacts = JSON.parse(localStorage.getItem("contacts"))
-    //     if (contacts?.length) {
-    //         console.log(contacts)
-    //         this.setState({
-    //             contacts
-    //         })
-    //     }
-    // } 
-    
-    // componentDidUpdate(prevProps, prevState) {
-    //     console.log("componentDidUpdate")
-    //     const { contacts } = this.state
-    //     if (prevState.contacts !== contacts) {
-    //         localStorage.setItem("contacts", JSON.stringify(contacts))
-    //     }
-    // }
-
-    // componentWillUnmount() {
-    //     console.log("componentWillUnmount")
-    //     // localStorage.removeItem('contacts')
-    // }
 
     const addContact = (contact) => {
-        // if (isDuplicate(contact)) {
-        //     return alert (`${contact.name} or ${contact.number} is already in contacts.`)
-        // }
+        if (isDuplicate(contact)) {
+            return alert (`Name ${contact.name} or number ${contact.number} is already in contacts.`)
+        }
         setContacts((prev) => {
             const newContact = {
                 id : nanoid(),
@@ -76,10 +53,10 @@ export default function Contacts() {
         } )
     }
 
-    // const isDuplicate = ({ name, number }) => {
-    //     const res = contacts.find((item) => item.name.toLocaleLowerCase() === name.toLocaleLowerCase() || item.number === number)
-    //     return res
-    // }
+    const isDuplicate = ({ name, number }) => {
+        const res = contacts.find((item) => item.name.toLocaleLowerCase() === name.toLocaleLowerCase() || item.number === number)
+        return res
+    }
 
     const handleChange = (e) => {
         const {value } = e.target;
