@@ -1,40 +1,43 @@
-import { useState } from 'react'
+import { Component } from 'react'
+
 import { nanoid } from 'nanoid'
 import PropTypes from 'prop-types'
 import css from 'components/ContactForm/ContactForm.module.css'
 
-export default function ContactForm({onSubmit}) {
+export default class ContactForm extends Component  {
 
-    const [name, setName] = useState('')
-    const [number, setNumber] = useState('')
+    state = {
+        name: '',
+        number: ''
+    }
 
-    const idName = nanoid()
-    const idNumber = nanoid()
+    idName = nanoid()
+    idNumber = nanoid()
 
-    const handleChange = (e) => {
+    handleChange = (e) => {
         const { name, value } = e.target;
-        switch (name) {
-            case "name": 
-                return setName(value)
-            case "number":
-                return setNumber(value)
-            default: 
-                return
-        }
+        this.setState({
+            [name]: value
+        })
     }
 
-    const handleSubmit = (e) => {
+    handleSubmit = (e) => {
         e.preventDefault();
-        const contact= {name, number}
-        onSubmit(contact)
-        console.log(contact)
-        setName('')
-        setNumber('')
-
+        this.props.onSubmit({ ...this.state })
+                console.log(this.props)
+        this.setState({
+            name: '',
+            number: ''
+        })
     }
-  return(
+    
+    render() {
+        const { name, number}= this.state
+        const { idName, idNumber, handleSubmit, handleChange } = this
+        
+        return(
             <form onSubmit={handleSubmit} className={css.form}>
-                <label htmlFor={idName}>Name</label>
+                <label htmlFor={idName}>Name </label>
                     <input
                         id={idName}
                         type="text"
@@ -61,6 +64,7 @@ export default function ContactForm({onSubmit}) {
                 <button type='submit'>Add contact</button>
             </form >
         )
+    }
 }
 
 ContactForm.propTypes = {

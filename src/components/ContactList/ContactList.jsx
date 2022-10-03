@@ -7,7 +7,6 @@ export default function ContactList({items , removeContact }) {
       return (
 
           <li className={css.item} key={id} > {name} {number} <button className={css.btn} onClick={ () => {removeContact(id)} }>Delete</button></li>
-          
 
       )
     })
